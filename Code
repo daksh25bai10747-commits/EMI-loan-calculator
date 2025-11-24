@@ -1,0 +1,44 @@
+def calc_emi(principal, annual_rate_percent, years):
+    if annual_rate_percent == 0:
+        months = years * 12
+        emi = principal / months
+        return emi
+    monthly_rate = (annual_rate_percent / 100) / 12
+    n = years * 12
+    emi = principal * monthly_rate * (1 + monthly_rate) * n / ((1 + monthly_rate) * n - 1)
+    return emi
+
+def total_payment(emi, years):
+    months = years * 12
+    return emi * months
+
+def total_interest(total_pay, principal):
+    return total_pay - principal
+
+def print_loan_report(loan_id, borrower, principal, rate, years):
+    emi = calc_emi(principal, rate, years)
+    tot_pay = total_payment(emi, years)
+    tot_int = total_interest(tot_pay, principal)
+
+    print("========================================")
+    print("LOAN EMI REPORT")
+    print("ID =", loan_id)
+    print("Name =", borrower)
+    print("----------------------------------------")
+    print("Principal =", principal)
+    print("Annual Rate (%) =", rate)
+    print("Tenure (years) =", years)
+    print("----------------------------------------")
+    print("Monthly EMI =", emi)
+    print("Total Payment =", tot_pay)
+    print("Total Interest =", tot_int)
+    print("========================================")
+
+loan_ids =   [2001, 2002, 2003]
+names =      ["Aman Singh", "Neha Verma", "Vikram Rao"]
+principals = [50000, 250000, 100000]
+rates =      [10, 7.5, 0]
+tenures =    [2, 10, 1]
+
+for i in range(len(loan_ids)):
+    print_loan_report(loan_ids[i], names[i], principals[i], rates[i], tenures[i])
